@@ -15,18 +15,16 @@ namespace SevenArmsSeries.Repositories.RDBMS
 
         public RepositoryResponse Save(RepositoryRequest<TKey, TEntity> request)
         {
-            if (string.IsNullOrWhiteSpace(request.Guid) || !SQLEntityFactory.Items.ContainsKey(request.Guid))
+            if (string.IsNullOrWhiteSpace(request.Guid) 
+                || 
+                !ReposityEntityFactory.Items.ContainsKey(request.Guid)
+                )
                 throw new Exception("Error: requestGuid is null or is not exists! ");
-            SQLEntityFactory.SQLEntity sqlEntity = SQLEntityFactory.Items[request.Guid];
-            return Save(request, sqlEntity);
+            return this.Save(request, ReposityEntityFactory.Items[request.Guid]);
         }
 
-        public RepositoryResponse Save(RepositoryRequest<TKey, TEntity> request, SQLEntityFactory.SQLEntity sqlEntity)
+        public RepositoryResponse Save(RepositoryRequest<TKey, TEntity> request, ReposityEntity re)
         {
-            string sqlCreate = sqlEntity.sqlByRepositoryCreate;
-            string sqlUpdate = sqlEntity.sqlByRepositoryUpdate;
-            string sqlRemove = sqlEntity.sqlByRepositoryRemove;
-
             RepositoryResponse result = new RepositoryResponse();
 
             int cnt = 0;
@@ -35,7 +33,7 @@ namespace SevenArmsSeries.Repositories.RDBMS
             {     
                try
                 {
-                    cnt += SQLHelper.ExecuteNonQuery(sqlEntity.dbname, sqlEntity.sqlByRepositoryCreate,e.GetSQLParams());
+                    cnt += SQLHelper.ExecuteNonQuery(re.OwnerService, re.CreateEntity,e.GetSQLParams());
                 }
                 catch (Exception ex)
                 {
@@ -48,7 +46,7 @@ namespace SevenArmsSeries.Repositories.RDBMS
             {
                 try
                 {
-                    cnt += SQLHelper.ExecuteNonQuery(sqlEntity.dbname, sqlEntity.sqlByRepositoryUpdate, e.GetSQLParams());
+                    cnt += SQLHelper.ExecuteNonQuery(re.OwnerService, re.UpdateEntity, e.GetSQLParams());
                 }
                 catch (Exception ex)
                 {
@@ -61,7 +59,7 @@ namespace SevenArmsSeries.Repositories.RDBMS
             {
                 try
                 {
-                    cnt += SQLHelper.ExecuteNonQuery(sqlEntity.dbname, sqlEntity.sqlByRepositoryRemove, e.GetSQLParams());
+                    cnt += SQLHelper.ExecuteNonQuery(re.OwnerService, re.RemoveEntity, e.GetSQLParams());
                 }
                 catch (Exception ex)
                 {
@@ -70,7 +68,7 @@ namespace SevenArmsSeries.Repositories.RDBMS
                 }
             }
 
-            result.Verdict = failcnt == 0;
+            result.ResultState = failcnt == 0;
             return result;
         }
 

@@ -65,15 +65,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="Core\IDataReaderExtend.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IKey.cs" />
-    <Compile Include="MoreQuery[TDto].cs" />
+    <Compile Include="QueryByMore[TDto].cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuerByCount.cs" />
     <Compile Include="Repository[TKey,TEntity].cs" />
-    <Compile Include="SingleQuery[TDto].cs" />
-    <Compile Include="SQLEntityFactory.cs" />
+    <Compile Include="ReposityEntityFactory.cs" />
+    <Compile Include="QueryBySingle[TDto].cs" />
     <Compile Include="Core\SQLHelper.cs" />
     <Compile Include="Core\SqlParams.cs" />
   </ItemGroup>
@@ -85,17 +86,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LICENSE.txt" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Common.dll" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Common.xml" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Data.dll" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Data.xml" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Validation.dll" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.ServiceLocation.dll" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.ServiceLocation.xml" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.Unity.Configuration.dll" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.Unity.dll" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.Unity.Interception.dll" />
-    <Content Include="MSEnterpriseLibrary\Microsoft.Practices.Unity.xml" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Common.dll" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Common.xml" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Data.dll" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Data.xml" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.EnterpriseLibrary.Validation.dll" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.ServiceLocation.dll" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.ServiceLocation.xml" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.Unity.Configuration.dll" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.Unity.dll" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.Unity.Interception.dll" />
+    <Content Include="_referdll\MSEnterpriseLibrary\Microsoft.Practices.Unity.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

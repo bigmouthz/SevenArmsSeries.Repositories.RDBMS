@@ -12,38 +12,25 @@ namespace SevenArmsSeries.Repositories.RDBMS
     {
         public CommandResponse Execute(CommandRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.Guid) || !SQLEntityFactory.Items.ContainsKey(request.Guid))
+            if (string.IsNullOrWhiteSpace(request.Guid)
+                || 
+                !ReposityEntityFactory.Items.ContainsKey(request.Guid)
+                )
                 throw new Exception("Error: requestGuid is null or is not exists! ");
-            SQLEntityFactory.SQLEntity sqlEntity = SQLEntityFactory.Items[request.Guid];
-            return Execute(request, sqlEntity);
+            return this.Execute(request,  ReposityEntityFactory.Items[request.Guid]);
         }
 
-
-        public CommandResponse Execute(CommandRequest request, SQLEntityFactory.SQLEntity sqlEntity)
+        public CommandResponse Execute(CommandRequest request, ReposityEntity re, string itemKey = null)
         {
-            string sql = sqlEntity.Items[request.Command];
-
-            IList<SqlParams> sqlparams = new List<SqlParams>();
-            foreach (var q in request.Params)
-            {
-                sqlparams.Add(new SqlParams()
-                                  {
-                                      ColumnName = q.Name,
-                                      ColumnType = string.IsNullOrWhiteSpace( q.Type)
-                                                       ? SQLHelper.GetDbType(q.Type)
-                                                       : DbType.String,
-                                      Value = q.Value
-                                  });
-            }
+            if (string.IsNullOrWhiteSpace(itemKey))
+                itemKey = ReposityEntity.FalgQuerySingleEntity;
+            string sql = re.Items[itemKey];
+            IList<SqlParams> sqlparams = Common.GetSqlParams(request);
             CommandResponse response = new CommandResponse();
             if (request.TrueScalar_FalseIntByResult)
-            {
-                response.ResultValue = SQLHelper.ExecuteScalar(sqlEntity.dbname, sql, sqlparams);
-            }
+                response.ResultValue = SQLHelper.ExecuteScalar(re.OwnerService, sql, sqlparams);
             else
-            {
-                response.ResultValue = SQLHelper.ExecuteNonQuery(sqlEntity.dbname, sql, sqlparams);
-            }
+                response.ResultValue = SQLHelper.ExecuteNonQuery(re.OwnerService, sql, sqlparams);
             return response;
         }
     }
